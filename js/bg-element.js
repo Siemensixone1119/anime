@@ -1,4 +1,4 @@
-export default function bg_element() {
+export default function bgElement() {
   const elements = document.querySelectorAll(".set-bg");
 
   for (let i = 0; i < elements.length; i += 1) {
