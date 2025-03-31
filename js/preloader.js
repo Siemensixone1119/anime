@@ -3,5 +3,5 @@ export default function preloader() {
   preloder.classList.add("active");
   setTimeout(() => {
     preloder.classList.remove("active");
-  }, 1500);
+  }, 1000);
 }

@@ -1,6 +1,6 @@
 import bgElement from "./bg-element.js";
 
-const mainData = () => {
+const categoriesData = () => {
   const renderGanreList = (ganres) => {
     const dropDownBlock = document.querySelector(".header__menu .dropdown");
 
@@ -17,12 +17,12 @@ const mainData = () => {
   };
 
   const renderAnimeList = (arr, ganres) => {
-    const wrapper = document.querySelector(".product .col-lg-8");
+    const wrapper = document.querySelector(".product-page .col-lg-8");
 
     ganres.forEach((ganre) => {
       const productBlock = document.createElement("div");
       const listBlock = document.createElement("div");
-      const list = arr.filter((item) => item.ganre === ganre);
+      const list = arr.filter((item) => item.tags.includes(ganre));
 
       listBlock.classList.add("row");
       productBlock.classList.add("mb-5");
@@ -102,6 +102,10 @@ const mainData = () => {
     .then((response) => response.json())
     .then((data) => {
       const ganres = new Set();
+      const ganreParams = new URLSearchParams(window.location.search).get(
+        "ganre"
+      );
+      console.log(ganreParams);
 
       data.forEach((item) => {
         ganres.add(item.ganre);
@@ -113,9 +117,13 @@ const mainData = () => {
           .reverse()
           .slice(0, 5)
       );
-      renderAnimeList(data.reverse(), ganres);
+      if (ganreParams) {
+        renderAnimeList(data.reverse(), [ganreParams]);
+      } else {
+        renderAnimeList(data.reverse(), ganres);
+      }
       renderGanreList(ganres);
     });
 };
 
-mainData();
+categoriesData();
